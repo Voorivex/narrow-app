@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="banner">
+        <h1>User List</h1>
+    </div>
+    <div class="user-list">
+        {% for user_hash, user in users.items() %}
+            <div class="user" onclick="loadUserInfo('{{ user_hash }}')">
+                {{ user['username'] }}
+            </div>
+        {% endfor %}
+    </div>
+    <div class="user-info"></div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

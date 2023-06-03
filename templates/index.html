@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="banner">
+        <h1>Welcome to FB portal</h1>
+    </div>
+    {% if frog_user %}
+        <p class="bottom-text">Logged in as: {{ frog_user }}</p>
+    {% endif %}
+    <div class="menu">
+        <ul>
+            <li><a href="{{ url_for('user_list') }}">User List</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Information</title>
+</head>
+<body>
+    <h1>User Information</h1>
+    <p>Name: {{ user['name'] }}</p>
+    <p>Email: {{ user['email'] }}</p>
+    <p>Username: {{ user['username'] }}</p>
+    <a href="{{ url_for('index') }}">Back to User List</a>
+    <a href="{{ url_for('admin') }}">Go to Admin Page</a>
+</body>
+</html>
