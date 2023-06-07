@@ -65,10 +65,12 @@ def user_info(user_hash):
 def all_users_info():
     return jsonify([users, admins])
 
-@app.route('/admins_panel')
+@app.route('/admins_panel', methods=['POST', 'GET'])
 def admin():
     debug = request.args.get('debug')
-    if debug == 'true':
+    authorize = request.form.get('authorize')
+        
+    if debug or authorize:
         return admin_content
     else:
         return "403 Forbidden", 403
