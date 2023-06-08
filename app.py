@@ -51,8 +51,13 @@ def contact():
 
         return render_template('thank_you.html')
 
+    action = request.args.get('action', '')
+    name = ''
+    if action == 'contact':
+        name = request.args.get('name', '')
+
     email = request.args.get('email', '')
-    return render_template('contact.html', email=email)
+    return render_template('contact.html', email=email, name=name)
 
 @app.route('/api/user/<user_hash>')
 def user_info(user_hash):
