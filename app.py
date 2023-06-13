@@ -80,7 +80,7 @@ def admin():
     else:
         return "403 Forbidden", 403
 
-@app.route('/show-http-packet')
+@app.route('/show-http-packet', methods=['POST', 'GET'])
 def show_http_packet():
     http_packet = ''
     environ = request.environ
