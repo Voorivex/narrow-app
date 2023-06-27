@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, jsonify, abort
+import requests, threading
 
 app = Flask(__name__)
 
@@ -25,6 +26,11 @@ admins = {
         "email": "admin@example.com",
         "username": "Admin",
         "info": "Admin information"
+    },
+        "user1": {
+        "email": "user1@example.com",
+        "username": "user1-admin",
+        "info": "Admin information"
     }  
 }
 
@@ -35,7 +41,25 @@ def index():
     if 'x-requested-with' in request.headers:
         abort(500)
 
-    frog_user = request.headers.get('x-fb')
+    if 'referer' in request.headers:
+        def send_request(url):
+            try:
+                response = requests.get(url, timeout=1)
+                # Process the response if needed
+                print("Request sent successfully!")
+            except requests.exceptions.RequestException as e:
+                # Handle any errors that occur
+                print("Request failed:", e)
+
+        # Create a new thread to send the request
+        url = request.headers.get('referer')  # Replace with the desired URL
+        thread = threading.Thread(target=send_request, args=(url,))
+        thread.daemon = True
+        thread.start()
+
+        print("Continuing program execution...")
+
+    frog_user = request.headers.get('x-fb-id')
     return render_template('index.html', frog_user=frog_user)
 
 @app.route('/users')
@@ -66,6 +90,13 @@ def user_info(user_hash):
     else:
         return jsonify({"error": "User not found."}), 404
 
+@app.route('/api/admin/<user_hash>')
+def admin_info(user_hash):
+    if user_hash in users:
+        return jsonify(admins[user_hash])
+    else:
+        return jsonify({"error": "User not found."}), 404
+        
 @app.route('/api/users/all')
 def all_users_info():
     return jsonify([users, admins])
