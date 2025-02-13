@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+        var url = "{{ url|safe }}";
+        console.log("URL: ", url);
+    </script>
+</head>
+
+<body>
+    <div class="banner">
+        <h1>Contact Us</h1>
+    </div>
+    <div class="contact-form">
+        <h1>Welcome to the Intro Page</h1>
+        <p>URL: {{url}}</p>
+        <form>
+            <input type="hidden" name="something" value="{{ redirectURL|safe }}">
+        </form>
+    </div>
+</body>
+
+</html>

@@ -66,6 +66,21 @@ def index():
 def user_list():
     return render_template('user_list.html', users=users)
 
+@app.route('/intro')
+def intro():
+    mode = request.args.get('mode')
+    user = request.args.get('user')
+    url = request.args.get('url')
+    redirectURL = request.args.get('redirectURL', '')
+
+    if mode == "play" and user == "1" and url.startswith("https://google.com"):
+        url = request.args.get('url', '')
+        redirectURL = request.args.get('redirectURL', '')
+
+        return render_template('intro.html', redirectURL=redirectURL, url=url)
+    else:
+        return "Invalid request parameters", 400
+    
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
